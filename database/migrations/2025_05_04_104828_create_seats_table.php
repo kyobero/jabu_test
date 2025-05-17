@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('event_id');
-            $table->string('seat_map');
-            $table->string('available_seats');
-            $table->string('sold_seats');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // who reserved it
+            $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            $table->string('seat_map')->default('10x10');
+            $table->boolean('is_reserved')->default(false);
             $table->timestamps();
         });
     }
